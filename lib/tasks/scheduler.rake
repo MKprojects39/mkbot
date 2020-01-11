@@ -7,8 +7,8 @@ namespace :scheduler do
         require 'rexml/document'
         
         client ||= Line::Bot::Client.new { |config|
-        config.channel_secret = ENV["bbc3734cab7c0ee42b1baf3944df4998"]
-        config.channel_token = ENV["U86b06d5b4c8ff278c690ca78ae0e5bb0"]
+        config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+        config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
         }
         
         url = "https://www.drk7.jp/weather/xml/13.xml"
