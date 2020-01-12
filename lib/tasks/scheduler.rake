@@ -53,7 +53,7 @@ namespace :scheduler do
     end
     # 発信するメッセージの設定
     push =
-      "#{word1}\n#{word3}\n以下、今日の天気予報です。\n・天候　#{weather}\n・最高気温　 #{maxtemp}°\n・最低気温　 #{mintemp}°\n・降水確率　#{per12to18}％\n今日のラッキーフードは#{word4}です。\n#{word2}"
+      "#{word1}\n#{word3}\n以下、今日の天気予報です。\n\n・天候: #{weather}\n・最高気温: #{maxtemp}°\n・最低気温: #{mintemp}°\n・降水確率: #{per12to18}％\n\n今日のラッキーフードは#{word4}です。\n#{word2}"
     # メッセージの発信先idを配列で渡す必要があるため、userテーブルよりpluck関数を使ってidを配列で取得
     user_ids = User.all.pluck(:line_id)
     message = {
