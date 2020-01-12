@@ -70,6 +70,7 @@ class LinebotController < ApplicationController
                  "ファミチキ"
                   ].sample
             push = "#{word5}"
+            end
           when /.*(かわいい|可愛い|かっこいい|きれい|綺麗|イケ猫|素敵|イケネコ|すてき|かわいいね|可愛いね|ありがと|すごい|スゴイ|すき|好き|頑張|がんば|ガンバ).*/
             per06to12 = doc.elements[xpath + 'info[1]/rainfallchance/period[2]'].text
             if per06to12.to_i >= mid_per
@@ -81,6 +82,7 @@ class LinebotController < ApplicationController
                 "月が綺麗ですね..."].sample
             push =
               "#{word6}"
+            end
           when /.*(みく|みくちゃん|ミク|えむ|エム|天気|気温|М|m|今日|あ|a|).*/
               per06to12 = doc.elements[xpath + 'info[1]/rainfallchance/period[2]'].text
               per12to18 = doc.elements[xpath + 'info[1]/rainfallchance/period[3]'].text
