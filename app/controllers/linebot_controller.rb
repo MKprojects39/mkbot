@@ -61,17 +61,17 @@ class LinebotController < ApplicationController
                 "明後日の天気を教えてやる。\n明日雨は降らなそうだぞ！\n天候　#{weather}\n最高気温　 #{maxtemp}°\n最低気温　 #{mintemp}°\n降水確率　#{per12to18}％"
             end
           when /.*(ごはん|ご飯|御飯|えさ|エサ|餌|).*/
-            word = ["チーズ","MC","ネギトロ","サイゼ","寿司","ドンキー","いのいち","米","ガパオ","カオマンガイ","まっちゃんハンバーグ","ガスト","爆弾ハンバーグ","ファミチキ","蒙古","肉まん","温野菜","焼肉","ラーメン(猫田)","高級フレンチ","ファッキン",].sample
-            push = "#{word}"
+            word5 = ["チーズ","MC","ネギトロ","サイゼ","寿司","ドンキー","いのいち","米","ガパオ","カオマンガイ","まっちゃんハンバーグ","ガスト","爆弾ハンバーグ","ファミチキ","蒙古","肉まん","温野菜","焼肉","ラーメン(猫田)","高級フレンチ","ファッキン"].sample
+            push = "#{word5}"
           when /.*(かわいい|可愛い|かっこいい|きれい|綺麗|イケ猫|素敵|イケネコ|すてき|かわいいね|可愛いね|ありがと|すごい|スゴイ|すき|好き|頑張|がんば|ガンバ).*/
-            word=
+            word6=
                 ["みゃ",
                 "しってる",
                 "💛",
                 "あり(=^・・^=)",
                 "月が綺麗ですね..."].sample
             push =
-              "#{word}"
+              "#{word6}"
           when /.*(みく|みくちゃん|ミク|えむ|エム|天気|気温|М|m|今日|あ|a|).*/
               per06to12 = doc.elements[xpath + 'info[1]/rainfallchance/period[2]'].text
               per12to18 = doc.elements[xpath + 'info[1]/rainfallchance/period[3]'].text
@@ -86,14 +86,14 @@ class LinebotController < ApplicationController
             per12to18 = doc.elements[xpath + 'info[1]/rainfallchance/period[3]'].text
             per18to24 = doc.elements[xpath + 'info[1]/rainfallchance/period[4]'].text
             if per06to12.to_i >= min_per || per12to18.to_i >= min_per || per18to24.to_i >= min_per
-              word =
+              word7 =
                 ["雨だから家にいましょう",
                  "地下に避難",
                  "雨なのでおやすみなさい"].sample
               push =
-                "今日の天気？\n今日は雨が降りそうだから傘があった方が安心だよ。\n今日の天気予報です。\n天候　#{weather}\n最高気温　 #{maxtemp}°\n最低気温　 #{mintemp}°\n降水確率　#{per12to18}％\n#{word}"
+                "今日の天気？\n今日は雨が降りそうだから傘があった方が安心だよ。\n今日の天気予報です。\n天候　#{weather}\n最高気温　 #{maxtemp}°\n最低気温　 #{mintemp}°\n降水確率　#{per12to18}％\n#{word7}"
             else
-              word =
+              word8 =
                 ["zzz",
                  "寝てます",
                  "ただいま睡眠中zzz",
@@ -102,7 +102,7 @@ class LinebotController < ApplicationController
                  "食事中",
                  "顔洗い中"].sample
               push =
-                "#{word}"
+                "#{word8}"
             end
           end
           # テキスト以外（画像等）のメッセージが送られた場合
