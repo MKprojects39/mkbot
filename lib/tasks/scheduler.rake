@@ -1,4 +1,5 @@
 
+namespace :scheduler do
 desc "This task is called by the Heroku scheduler add-on"
 task :update_feed => :environment do
   require 'line/bot'  # gem 'line-bot-api'
@@ -24,7 +25,7 @@ task :update_feed => :environment do
         per18to24 = doc.elements[xpath + 'info[1]/rainfallchance/period[4]'].text
         weather = doc.elements[xpath + 'info[1]/weather'].text
         maxtemp = doc.elements[xpath + 'info[1]/temperature/range[1]'].text
-        mintemp = doc.elements[xpath + 'info[1]/temperature/range[1]'].text
+        mintemp = doc.elements[xpath + 'info[1]/temperature/range[2]'].text
         
         
         
@@ -45,7 +46,7 @@ task :update_feed => :environment do
        "今日も一日楽しんでいきましょう！",
        "よい１日を"].sample
     word4 =
-      ["チーズ","MC","ネギトロ","サイゼ","寿司","ドンキー","いのいち","米","ガパオ","カオマンガイ","まっちゃんハンバーグ","ガスト","爆弾ハンバーグ","ファミチキ","蒙古","肉まん","温野菜","焼肉","ラーメン(猫田)","高級フレンチ","ファッキン",].sample
+      ["チーズ","MC","ネギトロ","サイゼ","寿司","ドンキー","いのいち","米","ガパオ","カオマンガイ","まっちゃんハンバーグ","ガスト","爆弾ハンバーグ","ファミチキ","蒙古","肉まん","温野菜","焼肉","ラーメン(猫田)","高級フレンチ","ファッキン"].sample
     # 降水確率によってメッセージを変更する閾値の設定
     mid_per = 50
     if per06to12.to_i >= mid_per || per12to18.to_i >= mid_per || per18to24.to_i >= mid_per
@@ -66,4 +67,4 @@ task :update_feed => :environment do
   end
   "OK"
 end
-
+end

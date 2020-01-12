@@ -45,7 +45,7 @@ class LinebotController < ApplicationController
                 "明日の天気をお伝えします。\n明日は雨が降りそう...\n\n・天候: #{weather}\n・最高気温: #{maxtemp}°\n・最低気温: #{mintemp}°\n・降水確率: #{per12to18}％"
             else
               push =
-                "明日の天気をお伝えします。\n明日雨は降らなそうだぞ！\n\n・天候: #{weather}\n・最高気温: #{maxtemp}°\n・最低気温: #{mintemp}°\n・降水確率: #{per12to18}％"
+                "明日の天気をお伝えします。\n明日は雨は降らなそうだぞ！\n\n・天候: #{weather}\n・最高気温: #{maxtemp}°\n・最低気温: #{mintemp}°\n・降水確率: #{per12to18}％"
             end
           when /.*(明後日|あさって).*/
             per06to12 = doc.elements[xpath + 'info[3]/rainfallchance/period[2]'].text
@@ -56,10 +56,10 @@ class LinebotController < ApplicationController
             mintemp = doc.elements[xpath + 'info[3]/temperature/range[2]'].text
             if per06to12.to_i >= min_per || per12to18.to_i >= min_per || per18to24.to_i >= min_per
               push =
-                "明後日の天気をお伝えします。\n明日は雨が降りそう...\n\n・天候: #{weather}\n・最高気温: #{maxtemp}°\n・最低気温: #{mintemp}°\n・降水確率: #{per12to18}％"
+                "明後日の天気をお伝えします。\n明後日は雨が降りそう...\n\n・天候: #{weather}\n・最高気温: #{maxtemp}°\n・最低気温: #{mintemp}°\n・降水確率: #{per12to18}％"
             else
               push =
-                "明後日の天気をお伝えします。\n明日雨は降らなそうだぞ！\n\n・天候: #{weather}\n・最高気温: #{maxtemp}°\n・最低気温: #{mintemp}°\n・降水確率: #{per12to18}％"
+                "明後日の天気をお伝えします。\n明後日は雨は降らなそうだぞ！\n\n・天候: #{weather}\n・最高気温: #{maxtemp}°\n・最低気温: #{mintemp}°\n・降水確率: #{per12to18}％"
             end
           when /.*(ごはん|ご飯|御飯|えさ|エサ|餌).*/
             word5 = ["チーズ","MC","ネギトロ","サイゼ","寿司","ドンキー","いのいち","トリキ","タイ料理","餌抜き！","まっちゃんハンバーグ","ガスト","パスタ","イタリアン","おにぎり","ソーセージ","いつもの","ケンタッキー","爆弾ハンバーグ","ファミチキ","蒙古","油そば","温野菜","焼肉","ラーメン(猫田)","高級フレンチ","ファッキン"].sample
