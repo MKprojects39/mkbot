@@ -29,6 +29,7 @@ class LinebotController < ApplicationController
           xpath = 'weatherforecast/pref/area[4]/'
           
           min_per = 50
+          mid_per = 0
           case input
             # 「明日」or「あした」というワードが含まれる場合
           when /.*(明日|あした).*/
@@ -61,12 +62,17 @@ class LinebotController < ApplicationController
                 "明後日の天気をお伝えします。\n明日雨は降らなそうだぞ！\n天候　#{weather}\n最高気温　 #{maxtemp}°\n最低気温　 #{mintemp}°\n降水確率　#{per12to18}％"
             end
           when /.*(ごはん|ご飯|御飯|えさ|エサ|餌|).*/
-           word5 =
+            per06to12 = doc.elements[xpath + 'info[1]/rainfallchance/period[2]'].text
+            if per06to12.to_i >= mid_per
+            word5 =
                 ["ハンバーグ",
-                 "おにぎり"
+                 "おにぎり",
+                 "ファミチキ"
                   ].sample
             push = "#{word5}"
           when /.*(かわいい|可愛い|かっこいい|きれい|綺麗|イケ猫|素敵|イケネコ|すてき|かわいいね|可愛いね|ありがと|すごい|スゴイ|すき|好き|頑張|がんば|ガンバ).*/
+            per06to12 = doc.elements[xpath + 'info[1]/rainfallchance/period[2]'].text
+            if per06to12.to_i >= mid_per
             word6 =
                 ["みゃ",
                 "しってる",
