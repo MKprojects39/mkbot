@@ -42,10 +42,10 @@ class LinebotController < ApplicationController
             mintemp = doc.elements[xpath + 'info[2]/temperature/range[2]'].text
             if per06to12.to_i >= min_per || per12to18.to_i >= min_per || per18to24.to_i >= min_per
               push =
-                "明日の天気をお伝えします。\n明日は雨が降りそう...\n天候　#{weather}\n最高気温　 #{maxtemp}°\n最低気温　 #{mintemp}°\n降水確率　#{per12to18}％"
+                "明日の天気をお伝えします。\n明日は雨が降りそう...\n・天候　#{weather}\n・最高気温　 #{maxtemp}°\n・最低気温　 #{mintemp}°\n・降水確率　#{per12to18}％"
             else
               push =
-                "明日の天気をお伝えします。\n明日雨は降らなそうだぞ！\n天候　#{weather}\n最高気温　 #{maxtemp}°\n最低気温　 #{mintemp}°\n降水確率　#{per12to18}％"
+                "明日の天気をお伝えします。\n明日雨は降らなそうだぞ！\n・天候　#{weather}\n・最高気温　 #{maxtemp}°\n・最低気温　 #{mintemp}°\n・降水確率　#{per12to18}％"
             end
           when /.*(明後日|あさって).*/
             per06to12 = doc.elements[xpath + 'info[3]/rainfallchance/period[2]'].text
@@ -56,16 +56,16 @@ class LinebotController < ApplicationController
             mintemp = doc.elements[xpath + 'info[3]/temperature/range[2]'].text
             if per06to12.to_i >= min_per || per12to18.to_i >= min_per || per18to24.to_i >= min_per
               push =
-                "明後日の天気をお伝えします。\n明日は雨が降りそう...\n天候　#{weather}\n最高気温　 #{maxtemp}°\n最低気温　 #{mintemp}°\n降水確率　#{per12to18}％"
+                "明後日の天気をお伝えします。\n明日は雨が降りそう...\n・天候　#{weather}\n・最高気温　 #{maxtemp}°\n・最低気温　 #{mintemp}°\n・降水確率　#{per12to18}％"
             else
               push =
-                "明後日の天気をお伝えします。\n明日雨は降らなそうだぞ！\n天候　#{weather}\n最高気温　 #{maxtemp}°\n最低気温　 #{mintemp}°\n降水確率　#{per12to18}％"
+                "明後日の天気をお伝えします。\n明日雨は降らなそうだぞ！\n・天候　#{weather}\n・最高気温　 #{maxtemp}°\n・最低気温　 #{mintemp}°\n・降水確率　#{per12to18}％"
             end
           when /.*(ごはん|ご飯|御飯|えさ|エサ|餌).*/
             word5 = ["チーズ","MC","ネギトロ","サイゼ","寿司","ドンキー","いのいち","トリキ","タイ料理","餌抜き！","まっちゃんハンバーグ","ガスト","パスタ","イタリアン","おにぎり","ソーセージ","いつもの","ケンタッキー","爆弾ハンバーグ","ファミチキ","蒙古","油そば","温野菜","焼肉","ラーメン(猫田)","高級フレンチ","ファッキン"].sample
             push = "#{word5}"
             
-          when /.*(かわいい|可愛い|かっこいい|きれい|綺麗|イケ猫|素敵|イケネコ|すてき|かわいいね|可愛いね|ありがと|すごい|スゴイ|すき|好き|頑張|がんば|ガンバ).*/
+          when /.*(かわいい|可愛い|みく|みくちゃん|ミク|えむ|エム|かっこいい|M|ありがとう|イケ猫|みゃ|イケネコ|すてき|かわいいね|可愛いね|ありがと|すごい|スゴイ|すき|好き|いいこ|ゆめ|ゆく).*/
             per06to12 = doc.elements[xpath + 'info[1]/rainfallchance/period[2]'].text
             if per06to12.to_i >= mid_per
             word6 =
@@ -79,7 +79,9 @@ class LinebotController < ApplicationController
             push =
               "#{word6}"
             end
-          when /.*(みく|みくちゃん|ミク|えむ|エム|天気|気温|М|m|今日|あ|a).*/
+          when /.*(使い方|つかいかた).*/
+            push = "使い方を説明します。\n毎朝7時にお天気、気温、降水確率をお知らせします!\n「天気、てんき、今日、気温、あ、a」のどれかを送信で今日の天気予報をお知らせします。\n「明日、あした」「明後日、あさって」送信でそれぞれの天気予報をお知らせします。\n「えさ、ご飯...ex」などごはんを連想させるワードを送信でごはんをお伝えします。\nその他会話もできるので話しかけてみてください！"
+          when /.*(天気|気温|てんき|今日|あ|a).*/
               per06to12 = doc.elements[xpath + 'info[1]/rainfallchance/period[2]'].text
               per12to18 = doc.elements[xpath + 'info[1]/rainfallchance/period[3]'].text
               per18to24 = doc.elements[xpath + 'info[1]/rainfallchance/period[4]'].text
@@ -87,7 +89,7 @@ class LinebotController < ApplicationController
               maxtemp = doc.elements[xpath + 'info[1]/temperature/range[1]'].text
               mintemp = doc.elements[xpath + 'info[1]/temperature/range[2]'].text
             push =
-              "こんにちは。\n今日の天気予報です。\n天候　#{weather}\n最高気温　 #{maxtemp}°\n最低気温　 #{mintemp}°\n降水確率　#{per12to18}％"
+              "こんにちは。\n今日の天気予報です。\n・天候　#{weather}\n・最高気温　 #{maxtemp}°\n・最低気温　 #{mintemp}°\n・降水確率　#{per12to18}％"
           else
             per06to12 = doc.elements[xpath + 'info[1]/rainfallchance/period[2]'].text
             per12to18 = doc.elements[xpath + 'info[1]/rainfallchance/period[3]'].text
@@ -98,7 +100,7 @@ class LinebotController < ApplicationController
                  "地下に避難",
                  "雨なのでおやすみなさい"].sample
               push =
-                "今日の天気？\n今日は雨が降りそうだから傘があった方が安心だよ。\n今日の天気予報です。\n天候　#{weather}\n最高気温　 #{maxtemp}°\n最低気温　 #{mintemp}°\n降水確率　#{per12to18}％\n#{word7}"
+                "今日の天気？\n今日は雨が降りそうだから傘があった方が安心だよ。\n今日の天気予報です。\n・天候　#{weather}\n・最高気温　 #{maxtemp}°\n・最低気温　 #{mintemp}°\n・降水確率　#{per12to18}％\n#{word7}"
             else
               word8 =
                 ["zzz",
