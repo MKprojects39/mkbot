@@ -17,9 +17,9 @@ namespace :scheduler do
         
         xpath = 'weatherforecast/pref/area[4]/info/rainfallchance/'
         
-        per06to12 = doc.elements[xpath + 'period[2]'].text
-        per12to18 = doc.elements[xpath + 'period[3]'].text
-        per18to24 = doc.elements[xpath + 'period[4]'].text
+        per06to12 = doc.elements[xpath + 'info[1]/rainfallchance/period[2]'].text
+        per12to18 = doc.elements[xpath + 'info[1]/rainfallchance/period[3]'].text
+        per18to24 = doc.elements[xpath + 'info[1]/rainfallchance/period[4]'].text
         weather = doc.elements[xpath + 'info[1]/weather'].text
         maxtemp = doc.elements[xpath + 'info[1]/temperature/range[1]'].text
         mintemp = doc.elements[xpath + 'info[1]/temperature/range[1]'].text
@@ -38,7 +38,7 @@ namespace :scheduler do
        "Mです。"].sample
     word2 =
       ["気をつけて行ってこいよ！",
-       "",
+       "今日も稼ぎましょう",
        "今日も頑張って働こうなｗ(^^)",
        "今日も一日楽しんでいきましょう！",
        "よい１日を"].sample
