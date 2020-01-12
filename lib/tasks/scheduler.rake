@@ -56,12 +56,12 @@ task :update_feed => :environment do
     push =
       "#{word1}\n#{word3}\n以下、今日の天気予報です。\n\n・天候: #{weather}\n・最高気温: #{maxtemp}°\n・最低気温: #{mintemp}°\n・降水確率: #{per12to18}％\n\n今日のラッキーフードは#{word4}です。\n#{word2}"
     # メッセージの発信先idを配列で渡す必要があるため、userテーブルよりpluck関数を使ってidを配列で取得
-    user_ids = User.all.pluck(:line_id)
+    user_ids = "U86b06d5b4c8ff278c690ca78ae0e5bb0"
     message = {
       type: 'text',
-      text: push
-    }
-    response = client.multicast(user_ids, message)
+      # text: push
+      }
+    response = client.push_message(user_ids, message)
   end
   "OK"
 end
