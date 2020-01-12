@@ -1,21 +1,23 @@
 namespace :scheduler do
-    desc "This task is called by the Heroku scheduler add-on"
-    task :update_feed => :enviroment do
-        require 'line/bot'
-        require 'open-uri'
-        require 'kconv'
-        require 'rexml/document'
-        
-        client ||= Line::Bot::Client.new { |config|
-        config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
-        config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
-        }
-        
-        url = "https://www.drk7.jp/weather/xml/13.xml"
-        xml = open( url ).read.touft8
-        doc = REXML::Document.new(xml)
-        
-        xpath = 'weatherforecast/pref/area[4]/info/rainfallchance/'
+desc "This task is called by the Heroku scheduler add-on"
+task :update_feed => :environment do
+  require 'line/bot'  # gem 'line-bot-api'
+  require 'open-uri'
+  require 'kconv'
+  require 'rexml/document'
+
+  client ||= Line::Bot::Client.new { |config|
+    config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+    config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
+  }
+
+  # 使用したxmlデータ（毎日朝6時更新）：以下URLを入力すれば見ることができます。
+  url  = "https://www.drk7.jp/weather/xml/13.xml"
+  # xmlデータをパース（利用しやすいように整形）
+  xml  = open( url ).read.toutf8
+  doc = REXML::Document.new(xml)
+  # パスの共通部分を変数化（area[4]は「東京地方」を指定している）
+  xpath = 'weatherforecast/pref/area[4]/info/rainfallchance/'
         
         per06to12 = doc.elements[xpath + 'info[1]/rainfallchance/period[2]'].text
         per12to18 = doc.elements[xpath + 'info[1]/rainfallchance/period[3]'].text
