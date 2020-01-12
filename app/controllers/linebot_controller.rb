@@ -27,7 +27,7 @@ class LinebotController < ApplicationController
           xml  = open( url ).read.toutf8
           doc = REXML::Document.new(xml)
           xpath = 'weatherforecast/pref/area[4]/'
-          # 当日朝のメッセージの送信の下限値は20％としているが、明日・明後日雨が降るかどうかの下限値は30％としている
+          
           min_per = 50
           case input
             # 「明日」or「あした」というワードが含まれる場合
@@ -38,28 +38,31 @@ class LinebotController < ApplicationController
             per18to24 = doc.elements[xpath + 'info[2]/rainfallchance/period[4]'].text
             weather = doc.elements[xpath + 'info[2]/weather'].text
             maxtemp = doc.elements[xpath + 'info[2]/temperature/range[1]'].text
-            mintemp = doc.elements[xpath + 'info[2]/temperature/range[1]'].text
+            mintemp = doc.elements[xpath + 'info[2]/temperature/range[2]'].text
             if per06to12.to_i >= min_per || per12to18.to_i >= min_per || per18to24.to_i >= min_per
               push =
-                "明日の天気を教えてやる。\n明日は雨が降りそう...\n　  天候　#{weather}\n　最高気温　 #{maxtemp}°\n　最低気温　 #{mintemp}°\n降水確率　#{per12to18}％\n"
+                "明日の天気を教えてやる。\n明日は雨が降りそう...\n天候　#{weather}\n最高気温　 #{maxtemp}°\n最低気温　 #{mintemp}°\n降水確率　#{per12to18}％\n"
             else
               push =
-                "明日の天気を教えてやる。\n明日雨は降らなそうだぞ！\n　  天候　#{weather}\n　最高気温　 #{maxtemp}°\n　最低気温　 #{mintemp}°\n降水確率　#{per12to18}％\n"
+                "明日の天気を教えてやる。\n明日雨は降らなそうだぞ！\n天候　#{weather}\n最高気温　 #{maxtemp}°\n最低気温　 #{mintemp}°\n降水確率　#{per12to18}％\n"
             end
           when /.*(明後日|あさって).*/
-            per06to12 = doc.elements[xpath + 'info[3]/rainfallchance/period[2]l'].text
-            per12to18 = doc.elements[xpath + 'info[3]/rainfallchance/period[3]l'].text
-            per18to24 = doc.elements[xpath + 'info[3]/rainfallchance/period[4]l'].text
+            per06to12 = doc.elements[xpath + 'info[3]/rainfallchance/period[2]'].text
+            per12to18 = doc.elements[xpath + 'info[3]/rainfallchance/period[3]'].text
+            per18to24 = doc.elements[xpath + 'info[3]/rainfallchance/period[4]'].text
             weather = doc.elements[xpath + 'info[3]/weather'].text
             maxtemp = doc.elements[xpath + 'info[3]/temperature/range[1]'].text
-            mintemp = doc.elements[xpath + 'info[3]/temperature/range[1]'].text
+            mintemp = doc.elements[xpath + 'info[3]/temperature/range[2]'].text
             if per06to12.to_i >= min_per || per12to18.to_i >= min_per || per18to24.to_i >= min_per
               push =
-                "明後日の天気を教えてやる。\n明日は雨が降りそう...\n　  天候　#{weather}\n　最高気温　 #{maxtemp}°\n　最低気温　 #{mintemp}°\n降水確率　#{per12to18}％\n"
+                "明後日の天気を教えてやる。\n明日は雨が降りそう...\n天候　#{weather}\n最高気温　 #{maxtemp}°\n最低気温　 #{mintemp}°\n降水確率　#{per12to18}％\n"
             else
               push =
-                "明後日の天気を教えてやる。\n明日雨は降らなそうだぞ！\n　  天候　#{weather}\n　最高気温　 #{maxtemp}°\n　最低気温　 #{mintemp}°\n降水確率　#{per12to18}％\n"
+                "明後日の天気を教えてやる。\n明日雨は降らなそうだぞ！\n天候　#{weather}\n最高気温　 #{maxtemp}°\n最低気温　 #{mintemp}°\n降水確率　#{per12to18}％\n"
             end
+          when /.*(ごはん|ご飯|御飯|えさ|エサ|餌|).*/
+            word = ["チーズ","MC","ネギトロ","サイゼ","寿司","ドンキー","いのいち","米","ガパオ","カオマンガイ","まっちゃんハンバーグ","ガスト","爆弾ハンバーグ","ファミチキ","蒙古","肉まん","温野菜","焼肉","ラーメン(猫田)","高級フレンチ","ファッキン",]
+            push = "#{word}"
           when /.*(かわいい|可愛い|かっこいい|きれい|綺麗|イケ猫|素敵|イケネコ|すてき|かわいいね|可愛いね|ありがと|すごい|スゴイ|すき|好き|頑張|がんば|ガンバ).*/
             word=
                 ["みゃ",
@@ -70,18 +73,18 @@ class LinebotController < ApplicationController
             push =
               "#{word}"
           when /.*(みく|みくちゃん|ミク|えむ|エム|天気|気温|М|m|今日|あ|a|).*/
-              per06to12 = doc.elements[xpath + 'info[1]/rainfallchance/period[2]l'].text
-              per12to18 = doc.elements[xpath + 'info[1]/rainfallchance/period[3]l'].text
-              per18to24 = doc.elements[xpath + 'info[1]/rainfallchance/period[4]l'].text
+              per06to12 = doc.elements[xpath + 'info[1]/rainfallchance/period[2]'].text
+              per12to18 = doc.elements[xpath + 'info[1]/rainfallchance/period[3]'].text
+              per18to24 = doc.elements[xpath + 'info[1]/rainfallchance/period[4]'].text
               weather = doc.elements[xpath + 'info[1]/weather'].text
               maxtemp = doc.elements[xpath + 'info[1]/temperature/range[1]'].text
-              mintemp = doc.elements[xpath + 'info[1]/temperature/range[1]'].text
+              mintemp = doc.elements[xpath + 'info[1]/temperature/range[2]'].text
             push =
               "こんにちは。\n今日の天気予報です。\n天候　#{weather}\n最高気温　 #{maxtemp}°\n最低気温　 #{mintemp}°\n降水確率　#{per12to18}％"
           else
-            per06to12 = doc.elements[xpath + 'info/rainfallchance/period[2]l'].text
-            per12to18 = doc.elements[xpath + 'info/rainfallchance/period[3]l'].text
-            per18to24 = doc.elements[xpath + 'info/rainfallchance/period[4]l'].text
+            per06to12 = doc.elements[xpath + 'info[1]/rainfallchance/period[2]'].text
+            per12to18 = doc.elements[xpath + 'info[1]/rainfallchance/period[3]'].text
+            per18to24 = doc.elements[xpath + 'info[1]/rainfallchance/period[4]'].text
             if per06to12.to_i >= min_per || per12to18.to_i >= min_per || per18to24.to_i >= min_per
               word =
                 ["雨だから家にいましょう",
