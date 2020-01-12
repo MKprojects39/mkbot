@@ -61,7 +61,7 @@ class LinebotController < ApplicationController
               push =
                 "明後日の天気をお伝えします。\n明日雨は降らなそうだぞ！\n天候　#{weather}\n最高気温　 #{maxtemp}°\n最低気温　 #{mintemp}°\n降水確率　#{per12to18}％"
             end
-          when /.*(ごはん|ご飯|御飯|えさ|エサ|餌|).*/
+          when /.*(ごはん|ご飯|御飯|えさ|エサ|餌).*/
             per06to12 = doc.elements[xpath + 'info[1]/rainfallchance/period[2]'].text
             if per06to12.to_i >= mid_per
             word5 =
@@ -83,7 +83,7 @@ class LinebotController < ApplicationController
             push =
               "#{word6}"
             end
-          when /.*(みく|みくちゃん|ミク|えむ|エム|天気|気温|М|m|今日|あ|a|).*/
+          when /.*(みく|みくちゃん|ミク|えむ|エム|天気|気温|М|m|今日|あ|a).*/
               per06to12 = doc.elements[xpath + 'info[1]/rainfallchance/period[2]'].text
               per12to18 = doc.elements[xpath + 'info[1]/rainfallchance/period[3]'].text
               per18to24 = doc.elements[xpath + 'info[1]/rainfallchance/period[4]'].text
