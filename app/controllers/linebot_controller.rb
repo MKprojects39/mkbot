@@ -88,9 +88,6 @@ class LinebotController < ApplicationController
               weather = doc.elements[xpath + 'info[1]/weather'].text
               maxtemp = doc.elements[xpath + 'info[1]/temperature/range[1]'].text
               mintemp = doc.elements[xpath + 'info[1]/temperature/range[2]'].text
-            push =
-              "こんにちは。\n今日の天気予報です。\n\n・天候: #{weather}\n・最高気温: #{maxtemp}°\n・最低気温: #{mintemp}°\n・降水確率: #{per12to18}％"
-          else
             
             if per06to12.to_i > min_per || per12to18.to_i > min_per || per18to24.to_i > min_per
               word7 =
@@ -100,7 +97,14 @@ class LinebotController < ApplicationController
               push =
                 "今日の天気？\n今日は雨が降りそうだから傘があった方が安心だよ。\n\n今日の天気予報です。\n・天候: #{weather}\n・最高気温: #{maxtemp}°\n・最低気温: #{mintemp}°\n・降水確率: #{per12to18}％\n\n#{word7}"
             else
-              word8 =
+              push =
+              "こんにちは。\n今日の天気予報です。\n\n・天候: #{weather}\n・最高気温: #{maxtemp}°\n・最低気温: #{mintemp}°\n・降水確率: #{per12to18}％"
+            end
+             when /.*(aaaaa|bbbbb).*/
+               if per06to12.to_i >= mid_per
+                 push = "w"
+               else
+                word8 =
                 ["zzz",
                  "寝てます",
                  "ただいま睡眠中zzz",
@@ -114,9 +118,9 @@ class LinebotController < ApplicationController
                  "１とは？",
                  "君の名は？",
                  "俺はもう本物の豹なのかもしれない.."].sample
-              push =
-                "#{word8}"
-            end
+                push =
+                  "#{word8}"
+               end
           end
           # テキスト以外（画像等）のメッセージが送られた場合
         else
