@@ -101,9 +101,8 @@ class LinebotController < ApplicationController
               "こんにちは。\n今日の天気予報です。\n\n・天候: #{weather}\n・最高気温: #{maxtemp}°\n・最低気温: #{mintemp}°\n・降水確率: #{per12to18}％"
             end
              when /.*(aaaaa|bbbbb).*/
-               if per06to12.to_i >= mid_per
                  push = "w"
-               else
+            else
                 word8 =
                 ["zzz",
                  "寝てます",
@@ -120,7 +119,7 @@ class LinebotController < ApplicationController
                  "俺はもう本物の豹なのかもしれない.."].sample
                 push =
                   "#{word8}"
-               end
+               
           end
           # テキスト以外（画像等）のメッセージが送られた場合
         else
