@@ -28,7 +28,7 @@ class LinebotController < ApplicationController
           doc = REXML::Document.new(xml)
           xpath = 'weatherforecast/pref/area[4]/'
           
-          min_per = 50
+          min_per = 40
           mid_per = 0
           case input
             # 「明日」or「あした」というワードが含まれる場合
@@ -40,7 +40,7 @@ class LinebotController < ApplicationController
             weather = doc.elements[xpath + 'info[2]/weather'].text
             maxtemp = doc.elements[xpath + 'info[2]/temperature/range[1]'].text
             mintemp = doc.elements[xpath + 'info[2]/temperature/range[2]'].text
-            if per06to12.to_i >= min_per || per12to18.to_i >= min_per || per18to24.to_i >= min_per
+            if per06to12.to_i > min_per || per12to18.to_i > min_per || per18to24.to_i > min_per
               push =
                 "明日の天気をお伝えします。\n明日は雨が降りそう...\n\n・天候: #{weather}\n・最高気温: #{maxtemp}°\n・最低気温: #{mintemp}°\n・降水確率: #{per12to18}％"
             else
@@ -54,7 +54,7 @@ class LinebotController < ApplicationController
             weather = doc.elements[xpath + 'info[3]/weather'].text
             maxtemp = doc.elements[xpath + 'info[3]/temperature/range[1]'].text
             mintemp = doc.elements[xpath + 'info[3]/temperature/range[2]'].text
-            if per06to12.to_i >= min_per || per12to18.to_i >= min_per || per18to24.to_i >= min_per
+            if per06to12.to_i > min_per || per12to18.to_i > min_per || per18to24.to_i > min_per
               push =
                 "明後日の天気をお伝えします。\n明後日は雨が降りそう...\n\n・天候: #{weather}\n・最高気温: #{maxtemp}°\n・最低気温: #{mintemp}°\n・降水確率: #{per12to18}％"
             else
@@ -92,7 +92,7 @@ class LinebotController < ApplicationController
               "こんにちは。\n今日の天気予報です。\n\n・天候: #{weather}\n・最高気温: #{maxtemp}°\n・最低気温: #{mintemp}°\n・降水確率: #{per12to18}％"
           else
             
-            if per06to12.to_i >= min_per || per12to18.to_i >= min_per || per18to24.to_i >= min_per
+            if per06to12.to_i > min_per || per12to18.to_i > min_per || per18to24.to_i > min_per
               word7 =
                 ["雨だから家にいましょう",
                  "地下に避難",
