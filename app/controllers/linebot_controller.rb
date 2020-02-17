@@ -112,11 +112,8 @@ class LinebotController < ApplicationController
                  "食事中",
                  "顔洗い中",
                  "シャー",
-                 "仕事中です",
-                 "なぜリンゴはおちるのか...",
-                 "１とは？",
-                 "君の名は？",
-                 "俺はもう本物の豹なのかもしれない.."].sample
+                 "仕事中です"
+                 ].sample
                 push =
                   "#{word8}"
                
